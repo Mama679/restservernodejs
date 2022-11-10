@@ -17,6 +17,8 @@ class Server{
     middlewares(){
         this.app.use(cors());
         this.app.use(express.static('public'));
+        //Proceso de lectura  del Body
+        this.app.use(express.json());
     }
 
     routes(){

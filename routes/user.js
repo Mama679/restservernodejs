@@ -5,7 +5,7 @@ const route = Router();
 
 route.get("/", userGet);
 route.post("/",userPost);
-route.put("/",userPut);
+route.put("/:id",userPut);
 route.delete("/",userDelete);
 route.patch("/",userPatch);           
 
