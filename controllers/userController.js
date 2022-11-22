@@ -23,16 +23,8 @@ const userPost = async(req, res = response) =>{
     const {nombre,correo,password,rol} = req.body;
     const usuario = new Usuario({nombre,correo,password,rol});
     const error = validationResult(req);
-    //Validacion del correo sea valido
     if(!error.isEmpty()){
         return res.status(400).json(error);
-    }
-    //Validamos correo ya exite en la Base de datos
-    const exiteEmail = await Usuario.findOne({correo});
-    if(exiteEmail){
-        return res.status(400).json({
-            msg:'El Correo ya esta registrando'
-        });
     }
     //Encriptar Contraseña,   
     const salt = bcryptjs.genSaltSync(); 
