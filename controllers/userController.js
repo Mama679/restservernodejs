@@ -54,11 +54,15 @@ const userPut = async (req, res = response) =>{
     });
 }
 
-const userDelete = (req, res = response) =>{
+const userDelete = async(req, res = response) =>{
     const {id} = req.params;
+    //Borrado fisico de la base de datos
+    //const usuario = await Usuario.findByIdAndDelete(id);
+    //Borrado Manteniendo el registro en la BD
+    const usuario = await Usuario.findByIdAndUpdate(id,{estado:false});
     res.json({
-        msg:'Petición Delete - Controlador',
-        id
+        msg:'Usuario Eliminado',
+        usuario
     });
 }
 

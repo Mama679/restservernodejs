@@ -24,7 +24,11 @@ route.put("/:id",[
     check('rol').custom(rolValido),
     validarCampos
 ],userPut);
-route.delete("/:id",userDelete);
+route.delete("/:id",[
+    check('id','No es un ID Valido').isMongoId(),
+    check('id').custom(usuarioExiste),
+    validarCampos 
+],userDelete);
 route.patch("/",userPatch);           
 
 module.exports=route;
