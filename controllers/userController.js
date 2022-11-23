@@ -3,21 +3,23 @@ const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const Usuario = require('../models/usuario');
 
+const userGet = async(req=request, res = response) =>{
+    const {limite = 5, desde=0} = req.query;
+    const consulta = {estado: true};
+    const [total,usuarios] = await Promise.all([
+        Usuario.countDocuments(consulta),
+        Usuario.find(consulta)
+          .limit(Number(limite))
+          .skip(Number(desde))
+    ]);
 
-const userGet = (req=request, res = response) =>{
-    const {q,nombre="Sin nombre",pag=1,limit} = req.query;
-    
     res.json({
-        msg:'Petición GET - Controlador',
-        q,
-        nombre,
-        pag,
-        limit
+        total,
+        usuarios
     }); 
 }
 
 const userPost = async(req, res = response) =>{
-
     //const body = req.body;
     //Deserailizamos el body
     const {nombre,correo,password,rol} = req.body;
@@ -32,22 +34,31 @@ const userPost = async(req, res = response) =>{
     //Guardar en Base de Datos usuario   
     await usuario.save();
     res.status(201).json({
-        msg:'Petición POST - Usuario Agregado',
+        msg:'Usuario Agregado',
         usuario
     }); 
 }
 
-const userPut = (req, res = response) =>{
+const userPut = async (req, res = response) =>{
     const {id} = req.params;
+    const {password,google,...resto} = req.body;
+    //Validar contraseña del BD
+    if(password){
+        const salt = bcryptjs.genSaltSync(); 
+        resto.password = bcryptjs.hashSync(password,salt);
+    }
+    const user = await Usuario.findByIdAndUpdate(id,resto);
     res.json({
-        msg:'Petición PUT - Controlador',
-        id
+        msg:'Usuario Actualizado',
+        user
     });
 }
 
 const userDelete = (req, res = response) =>{
+    const {id} = req.params;
     res.json({
-        msg:'Petición Delete - Controlador'
+        msg:'Petición Delete - Controlador',
+        id
     });
 }
 
