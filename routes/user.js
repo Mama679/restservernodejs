@@ -24,6 +24,7 @@ route.put("/:id",[
     check('rol').custom(rolValido),
     validarCampos
 ],userPut);
+
 route.delete("/:id",[
     check('id','No es un ID Valido').isMongoId(),
     check('id').custom(usuarioExiste),
