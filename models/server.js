@@ -13,6 +13,7 @@ class Server{
         this.middlewares();
         //Rutas de la app
         this.usuariosPath ='/api/usuarios';
+        this.authPath = '/api/auth';
         this.routes();
         this.port = process.env.PORT;
         
@@ -30,6 +31,7 @@ class Server{
     }
 
     routes(){
+        this.app.use(this.authPath,require('../routes/auth'));
         this.app.use(this.usuariosPath, require('../routes/user'));
     }
 
