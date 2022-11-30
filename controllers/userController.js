@@ -56,10 +56,12 @@ const userPut = async (req, res = response) =>{
 
 const userDelete = async(req, res = response) =>{
     const {id} = req.params;
+    //const uid = req.uid;
     //Borrado fisico de la base de datos
     //const usuario = await Usuario.findByIdAndDelete(id);
     //Borrado Manteniendo el registro en la BD
     const usuario = await Usuario.findByIdAndUpdate(id,{estado:false});
+    //const usuarioAutenticado = req.usuario;
     res.json({
         msg:'Usuario Eliminado',
         usuario
