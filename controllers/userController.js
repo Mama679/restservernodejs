@@ -19,6 +19,22 @@ const userGet = async(req=request, res = response) =>{
     }); 
 }
 
+const userxId = async(req=request,res=response)=>{
+    const {id} = req.params;
+    const user = await Usuario.findById(id);
+
+    if(!user)
+    {
+        return res.status(400).json({
+            msg:`Usuario con codigo ${id}, no existe`
+        });
+    }
+    
+    res.json({
+        user
+    }); 
+}
+
 const userPost = async(req, res = response) =>{
     //const body = req.body;
     //Deserailizamos el body
@@ -76,6 +92,7 @@ const userPatch = (req, res = response) =>{
 
 module.exports ={
     userGet,
+    userxId,
     userPost,
     userPut,
     userDelete,
