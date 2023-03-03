@@ -50,7 +50,10 @@ const login = async(req,res=response) =>{
 const googleSigin = async(req, res = response)=>{
     const {id_token} = req.body;
     try{
-        const {nombre,img,correo} = await googleVerify(id_token);
+       const {nombre,img,correo} = await googleVerify(id_token);
+       // const googleUser = await googleVerify(id_token);
+        //console.log(googleUser)
+
         let usuario = await Usuario.findOne({correo});
         if(!usuario)
         {
@@ -58,6 +61,7 @@ const googleSigin = async(req, res = response)=>{
                 nombre,
                 correo,
                 password:':P',
+                rol:'ADMIN_ROLE',
                 img,
                 google:true
             }
@@ -74,12 +78,11 @@ const googleSigin = async(req, res = response)=>{
 
         const token = await generarJwt(usuario.id);
 
-
         res.json({
             msg:'Todo Ok',
             usuario,
             token
-        })
+        });
     }
     catch(error)
     {

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sign-In</title>
+    <title>Google Sign</title>
 </head>
 
 <body>
@@ -23,6 +23,10 @@
         data-text="sign_in_with"
         data-shape="rectangular" 
         data-logo_alignment="left">
+    </div>
+
+    <div>
+        <button id="btnsalir">Salir</button>
     </div>
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -44,8 +48,18 @@
             .then(resp=>resp.json())
             .then(resp => {
                 console.log(resp);
-            })
-            .catch(console.warn);
+                localStorage.setItem('email',resp.usuario.correo);
+            }).catch(console.warn);
+        }
+        
+        const btnSalir = document.getElementById("btnsalir");
+        btnSalir.onclick = () =>{
+           // console.log(google.accounts.id);
+           google.accounts.id.disableAutoSelect();
+           google.accounts.id.revoke(localStorage.getItem('email'), done =>{
+              localStorage.clear();
+              location.reload();
+           });
         }
       </script>
 </body>
