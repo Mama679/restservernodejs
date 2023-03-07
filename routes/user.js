@@ -23,7 +23,7 @@ route.post("/",[
 route.put("/:id",[
     check('id','No es un ID Valido').isMongoId(),
     check('id').custom(usuarioExiste),
-    check('rol').custom(rolValido),
+    esAdminRol,
     validarCampos
 ],userPut);
 

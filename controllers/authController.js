@@ -53,7 +53,6 @@ const googleSigin = async(req, res = response)=>{
        const {nombre,img,correo} = await googleVerify(id_token);
        // const googleUser = await googleVerify(id_token);
         //console.log(googleUser)
-
         let usuario = await Usuario.findOne({correo});
         if(!usuario)
         {
@@ -61,7 +60,7 @@ const googleSigin = async(req, res = response)=>{
                 nombre,
                 correo,
                 password:':P',
-                rol:'ADMIN_ROLE',
+                rol:'USER_ROLE',
                 img,
                 google:true
             }

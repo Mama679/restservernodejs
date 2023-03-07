@@ -12,8 +12,13 @@ class Server{
         //Middlewares
         this.middlewares();
         //Rutas de la app
-        this.usuariosPath ='/api/usuarios';
-        this.authPath = '/api/auth';
+       // this.usuariosPath ='/api/usuarios';
+        //this.authPath = '/api/auth';
+        this.rutas = {
+            auth:'/api/auth',
+            categoria:'/api/categoria',
+            user:'/api/usuarios'
+        };
         this.routes();
         this.port = process.env.PORT;
         
@@ -31,8 +36,9 @@ class Server{
     }
 
     routes(){
-        this.app.use(this.authPath,require('../routes/auth'));
-        this.app.use(this.usuariosPath, require('../routes/user'));
+        this.app.use(this.rutas.auth,require('../routes/auth'));
+        this.app.use(this.rutas.categoria,require('../routes/categoria'));
+        this.app.use(this.rutas.user, require('../routes/user'));
     }
 
     listen(){
