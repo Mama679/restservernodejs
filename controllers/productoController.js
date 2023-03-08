@@ -46,7 +46,9 @@ const obtenerProdcto = async(req = request, res=response) =>{
 //Crear Producto
 const crearProducto = async(req=request, res=response) =>{
     const {nombre,descripcion,precio,categoria,disponible} = req.body;
+    //const {estado,usuario, ...body} = req.body;
     const productoDb = await Producto.findOne({ nombre });
+    //const productoDb = await Producto.findOne({ nombre: body.nombre });
     const error = validationResult(req);
 
     if(!error.isEmpty()){
@@ -59,6 +61,13 @@ const crearProducto = async(req=request, res=response) =>{
         });
     }
     //Generar data a guardar
+    /*
+    const dada ={
+        ...body,
+        nombre = body.nombre.toUpperCase(),
+        usuario:req.usuario._id
+    };
+    */ 
     const data = {
         nombre: nombre.toUpperCase(),
         descripcion,

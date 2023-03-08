@@ -16,6 +16,7 @@ class Server{
         //this.authPath = '/api/auth';
         this.rutas = {
             auth:'/api/auth',
+            buscar:'/api/buscar',
             categoria:'/api/categoria',
             producto:'/api/producto',
             user:'/api/usuarios'
@@ -37,9 +38,10 @@ class Server{
     }
 
     routes(){
-        this.app.use(this.rutas.auth,require('../routes/auth'));
-        this.app.use(this.rutas.categoria,require('../routes/categoria'));
-        this.app.use(this.rutas.producto,require('../routes/producto'));
+        this.app.use(this.rutas.auth, require('../routes/auth'));
+        this.app.use(this.rutas.buscar, require('../routes/buscar'));
+        this.app.use(this.rutas.categoria, require('../routes/categoria'));
+        this.app.use(this.rutas.producto, require('../routes/producto'));
         this.app.use(this.rutas.user, require('../routes/user'));
     }
 
